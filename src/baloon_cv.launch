@@ -1,0 +1,24 @@
+<launch>
+    <!-- mavros -->
+    <include file="$(find mavros)/launch/px4.launch">
+        <arg name="fcu_url" value="/dev/ttyAMA0:921600"/>
+        <arg name="gcs_url" value="tcp-l://0.0.0.0:5760"/>
+    </include>
+    
+    <!-- baloon pose estimator -->
+	<node name="baloon_detector" pkg="baloon" type="baloon_pose_cv.py" output="screen">
+		<param name="invert" value="1"/>
+		<param name="h1" value="7"/>
+		<param name="h2" value="158"/>
+		<param name="s1" value="0"/>
+		<param name="s2" value="255"/>
+		<param name="v1" value="0"/>
+		<param name="v2" value="255"/>
+        <param name="real_ballon_r" value="0.145"/>
+        <param name="camera_info_url" value="$(find baloon)/src/fe130_320_01.yaml"/>
+		<param name="framerate" value="40"/>
+	</node> 
+
+    <!-- web video server -->
+    <node name="web_video_server" pkg="web_video_server" type="web_video_server" required="false" respawn="true" respawn_delay="5"/>
+</launch>

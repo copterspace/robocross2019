@@ -1,0 +1,12 @@
+[Unit]
+Description=BALOON ROS package
+Requires=roscore.service
+After=roscore.service
+
+[Service]
+EnvironmentFile=/home/pi/baloon_ws/src/baloon/src/roscore.env
+ExecStart=/opt/ros/kinetic/bin/roslaunch baloon baloon_cv.launch --wait
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
